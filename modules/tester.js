@@ -109,13 +109,14 @@ var Tester = function Tester(casper, options) {
         post:     []
     };
     this.options = utils.mergeObjects({
-        concise:  false,  // concise output?
-        failFast: false,  // terminates a suite as soon as a test fails?
-        failText: "FAIL", // text to use for a failed test
-        passText: "PASS", // text to use for a succesful test
-        skipText: "SKIP", // text to use for a skipped test
-        pad:      80    , // maximum number of chars for a result line
-        warnText: "WARN"  // text to use for a dubious test
+        concise:       false,  // concise output?
+        failFast:      false,  // terminates a suite as soon as a test fails?
+        failText:      "FAIL", // text to use for a failed test
+        passText:      "PASS", // text to use for a succesful test
+        skipText:      "SKIP", // text to use for a skipped test
+        pad:           80    , // maximum number of chars for a result line
+        warnText:      "WARN", // text to use for a dubious test
+        assertDoThrow: true    // default value for assert's `doThrow` context option
     }, options);
     this.queue = [];
     this.running = false;
@@ -312,7 +313,7 @@ Tester.prototype.assertTrue = function assert(subject, message, context) {
         standard: "Subject is strictly true",
         message: message,
         file: this.currentTestFile,
-        doThrow: true,
+        doThrow: this.options.assertDoThrow,
         values: {
             subject: utils.getPropertyPath(context, 'values.subject') || subject
         }
